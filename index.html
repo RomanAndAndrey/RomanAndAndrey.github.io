@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Работы Романа и Андрея</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Работы Романа и Андрея</h1>
+        <p>Добро пожаловать! Здесь собраны наши проекты.</p>
+        <button id="theme-toggle" aria-label="Переключить тему" title="Переключить тему">🌙</button>
+    </header>
+
+    <main>
+        <section>
+            <h2 class="section-title">Проекты Андрея</h2>
+            <div class="projects-grid" id="andrey-projects"></div>
+        </section>
+
+        <section>
+            <h2 class="section-title">Проекты Романа</h2>
+            <div class="projects-grid" id="roman-projects"></div>
+        </section>
+
+        <section>
+            <h2 class="section-title">Совместные проекты</h2>
+            <div class="projects-grid" id="joint-projects"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Роман и Андрей | GitHub Pages</p>
+    </footer>
+
+    <!-- Модальное окно для деталей проекта -->
+    <div id="modal" class="modal" aria-hidden="true">
+        <div class="modal-content" role="dialog" aria-modal="true">
+            <span id="modal-close" class="modal-close" aria-label="Закрыть">&times;</span>
+            <img id="modal-img" src="" alt="" class="modal-img" />
+            <h2 id="modal-title"></h2>
+            <p id="modal-desc"></p>
+            <a id="modal-link" href="#" target="_blank" rel="noopener" class="modal-link">Перейти к проекту</a>
+        </div>
+    </div>
+</body>
+</html>

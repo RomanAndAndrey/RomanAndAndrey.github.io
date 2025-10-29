@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>🎨 Рисовалка</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <h1>🎨 Рисовалка</h1>
+
+    <div class="toolbar">
+        <label for="colorPicker">Цвет линии:</label>
+        <input type="color" id="colorPicker" value="#3498db">
+
+        <label for="sizePicker">Толщина линии:</label>
+        <input type="range" id="sizePicker" min="1" max="30" value="3">
+
+        <label for="shapePicker">Фигура:</label>
+        <select id="shapePicker">
+            <option value="free">Свободная линия</option>
+            <option value="rect">Квадрат</option>
+            <option value="circle">Круг</option>
+            <option value="line">Прямая</option>
+        </select>
+
+        <button id="clearBtn">Очистить</button>
+        <button id="saveBtn">Скачать PNG</button>
+        <button id="themeToggle">🌙 Тёмная тема</button>
+    </div>
+
+    <div class="canvas-container">
+        <canvas id="canvas" width="900" height="600"></canvas>
+        <canvas id="preview" width="900" height="600"></canvas>
+    </div>
+</body>
+</html>

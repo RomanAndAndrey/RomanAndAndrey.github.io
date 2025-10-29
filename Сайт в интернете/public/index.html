@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Сайт в интернете — демо</title>
+        <link rel="stylesheet" href="style.css" />
+        <script src="script.js" defer></script>
+    </head>
+    <body>
+        <header class="header">
+            <img src="icon.svg" alt="Иконка" class="icon" />
+            <div>
+                <h1>Сайт в интернете</h1>
+                <p class="muted">Python + SQLite, запускается на вашем ПК</p>
+            </div>
+            <div class="admin-controls">
+                <button id="admin-btn" class="btn btn-secondary" type="button">Войти как админ</button>
+            </div>
+        </header>
+
+    <main class="container">
+        <section class="panel">
+            <div class="row">
+                <span class="muted">Состояние API:</span>
+                <span id="health" class="badge">—</span>
+            </div>
+            <form id="message-form" class="form">
+                <label>
+                    <span>Имя</span>
+                    <input id="name" type="text" placeholder="Ваше имя" />
+                </label>
+                <label>
+                    <span>Сообщение</span>
+                    <textarea id="text" placeholder="Напишите что-нибудь..." required></textarea>
+                </label>
+                <button class="primary" type="submit">Добавить</button>
+            </form>
+        </section>
+
+        <section class="panel">
+            <h2>Сообщения</h2>
+            <ul id="list" class="list"></ul>
+        </section>
+
+        <section class="panel">
+            <div class="row" style="justify-content: space-between; gap:12px; flex-wrap: wrap;">
+                <h2 style="margin:0">Проекты</h2>
+                <div style="display:flex; gap:8px; align-items:center;">
+                    <input id="repo-search" type="search" placeholder="Поиск по проектам" style="min-width:240px;flex:1;max-width:320px;background:#0d1130;color:var(--text);border:1px solid #2a3360;border-radius:10px;padding:8px 10px;" />
+                    <button id="add-source-btn" class="btn" title="Добавить источник/репозиторий">+</button>
+                </div>
+            </div>
+            <!-- Контейнеры секций владельцев формируются скриптом -->
+            <div id="projects-root"></div>
+            <div id="repos-empty" class="muted" style="display:none;margin-top:8px;">Ничего не найдено.</div>
+        </section>
+    </main>
+
+    <!-- Просмотр проекта в iframe -->
+    <div id="viewer-modal" class="viewer-modal" hidden>
+        <div class="viewer-content">
+            <div class="viewer-bar">
+                <strong id="viewer-title"></strong>
+                <div class="spacer"></div>
+                <a id="viewer-open" href="#" target="_blank" class="btn" style="margin-right:8px;">Открыть в новой вкладке</a>
+                <button id="viewer-close" class="btn">Закрыть</button>
+            </div>
+            <iframe id="viewer-frame" sandbox="allow-scripts allow-same-origin allow-forms allow-popups" referrerpolicy="no-referrer"></iframe>
+            <div id="viewer-note" class="muted" style="padding:8px 12px; display:none;">Этот сайт может запретить открытие в iframe. Используйте кнопку “Открыть в новой вкладке”.</div>
+        </div>
+    </div>
+
+    <!-- Форма добавления источника/репозитория -->
+    <div id="add-modal" class="viewer-modal" hidden>
+        <div class="viewer-content">
+            <div class="viewer-bar">
+                <strong>Добавить проект</strong>
+                <div class="spacer"></div>
+                <button id="add-close" class="btn">Закрыть</button>
+            </div>
+            <div style="padding:14px; overflow:auto;">
+                <form id="add-form" class="form">
+                    <label>
+                        <span>Название проекта</span>
+                        <input id="add-title" type="text" placeholder="Например, Галерея" required />
+                    </label>
+                    <label>
+                        <span>Ник на GitHub</span>
+                        <input id="add-username" type="text" placeholder="owner" required />
+                    </label>
+                    <label>
+                        <span>Имя и фамилия автора</span>
+                        <input id="add-fullname" type="text" placeholder="Имя Фамилия" required />
+                    </label>
+                    <label>
+                        <span>Ссылка на репозиторий</span>
+                        <input id="add-url" type="url" placeholder="https://github.com/owner/repo" required />
+                    </label>
+                    <div id="add-error" class="error-box" hidden></div>
+                    <div class="row" style="justify-content:flex-end; gap:8px;">
+                        <button type="submit" class="btn">Добавить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    
+    </body>
+    </html>

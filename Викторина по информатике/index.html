@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Викторина по информатике</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+
+        .question-block {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-left: 5px solid #667eea;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .question-block:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .question-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .question-text {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            display: inline;
+        }
+
+        .variants-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .variant {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .variant:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+            transform: scale(1.02);
+        }
+
+        .variant.selected {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1.1em;
+            text-align: center;
+            text-transform: lowercase;
+            transition: border-color 0.3s ease;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .controls {
+            text-align: center;
+            margin: 40px 0 20px;
+        }
+
+        .check-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+color: white;
+            border: none;
+            padding: 18px 45px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .check-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .check-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .result {
+            text-align: center;
+            margin: 30px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 15px;
+            color: white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .result-score {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 10px 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .result-text {
+            font-size: 1.3em;
+            opacity: 0.9;
+        }
+
+        .credits {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-style: italic;
+            border-top: 1px solid #e9ecef;
+            padding-top: 20px;
+        }
+
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-block {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .question-block:nth-child(odd) { animation-delay: 0.1s; }
+        .question-block:nth-child(even) { animation-delay: 0.2s; }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .variants-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 25px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+        }
+
+        /* Стили для правильных/неправильных ответов */
+        .correct {
+            border-left-color: #28a745 !important;
+            background: #d4edda !important;
+        }
+
+        .incorrect {
+            border-left-color: #dc3545 !important;
+            background: #f8d7da !important;
+        }
+
+        .correct-answer {
+            color: #28a745;
+            font-weight: bold;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧠 Викторина по информатике</h1>
+        <p class="subtitle">Проверьте свои знания в области информационных технологий</p>
+
+        <!-- Вопрос 1 -->
+        <div class="question-block" id="q1">
+            <div class="question-number">1</div>
+            <div class="question-text">Что из перечисленного является минимальной единицей измерения информации?</div>
+            <div class="variants-grid">
+                <div class="variant" onclick="selectVariant(this, 'a1')">а) Байт</div>
+                <div class="variant" onclick="selectVariant(this, 'a1')">б) Килобайт</div>
+                <div class="variant" onclick="selectVariant(this, 'a1')">в) Бит</div>
+                <div class="variant" onclick="selectVariant(this, 'a1')">г) Мегабайт</div>
+            </div>
+            <input id="a1" type="text" class="answer-input" placeholder="Введите букву ответа (а, б, в, г)" maxlength="1" />
+            <div class="correct-answer" id="correct1">Правильный ответ: в) Бит</div>
+        </div>
+
+        <!-- Вопрос 2 -->
+        <div class="question-block" id="q2">
+            <div class="question-number">2</div>
+            <div class="question-text">Как называется фундаментальная структура данных в программировании, представляющая собой упорядоченный набор элементов одного типа?</div>
+<div class="variants-grid">
+                <div class="variant" onclick="selectVariant(this, 'a2')">а) Словарь (Dictionary)</div>
+                <div class="variant" onclick="selectVariant(this, 'a2')">б) Массив (Array)</div>
+                <div class="variant" onclick="selectVariant(this, 'a2')">в) Очередь (Queue)</div>
+                <div class="variant" onclick="selectVariant(this, 'a2')">г) Множество (Set)</div>
+            </div>
+            <input id="a2" type="text" class="answer-input" placeholder="Введите букву ответа (а, б, в, г)" maxlength="1" />
+            <div class="correct-answer" id="correct2">Правильный ответ: б) Массив (Array)</div>
+        </div>
+
+        <!-- Вопрос 3 -->
+        <div class="question-block" id="q3">
+            <div class="question-number">3</div>
+            <div class="question-text">Какой язык программирования часто называют «языком веба» из-за его основной роли в создании интерактивности на веб-страницах?</div>
+            <div class="variants-grid">
+                <div class="variant" onclick="selectVariant(this, 'a3')">а) Python</div>
+                <div class="variant" onclick="selectVariant(this, 'a3')">б) Java</div>
+                <div class="variant" onclick="selectVariant(this, 'a3')">в) SQL</div>
+                <div class="variant" onclick="selectVariant(this, 'a3')">г) JavaScript</div>
+            </div>
+            <input id="a3" type="text" class="answer-input" placeholder="Введите букву ответа (а, б, в, г)" maxlength="1" />
+            <div class="correct-answer" id="correct3">Правильный ответ: г) JavaScript</div>
+        </div>
+
+        <!-- Вопрос 4 -->
+        <div class="question-block" id="q4">
+            <div class="question-number">4</div>
+            <div class="question-text">Как называется набор правил, который определяет, как данные передаются по сети (например, интернет)?</div>
+            <div class="variants-grid">
+                <div class="variant" onclick="selectVariant(this, 'a4')">а) Язык программирования</div>
+                <div class="variant" onclick="selectVariant(this, 'a4')">б) Алгоритм</div>
+                <div class="variant" onclick="selectVariant(this, 'a4')">в) Протокол</div>
+                <div class="variant" onclick="selectVariant(this, 'a4')">г) Компилятор</div>
+            </div>
+            <input id="a4" type="text" class="answer-input" placeholder="Введите букву ответа (а, б, в, г)" maxlength="1" />
+            <div class="correct-answer" id="correct4">Правильный ответ: в) Протокол</div>
+        </div>
+
+        <!-- Вопрос 5 -->
+        <div class="question-block" id="q5">
+            <div class="question-number">5</div>
+            <div class="question-text">Что означает аббревиатура «ОЗУ» в контексте устройства компьютера?</div>
+            <div class="variants-grid">
+                <div class="variant" onclick="selectVariant(this, 'a5')">а) Основное Запоминающее Устройство</div>
+                <div class="variant" onclick="selectVariant(this, 'a5')">б) Оперативное Запоминающее Устройство</div>
+                <div class="variant" onclick="selectVariant(this, 'a5')">в) Общее Закреплённое Устройство</div>
+                <div class="variant" onclick="selectVariant(this, 'a5')">г) Оптическое Запоминающее Устройство</div>
+            </div>
+            <input id="a5" type="text" class="answer-input" placeholder="Введите букву ответа (а, б, в, г)" maxlength="1" />
+            <div class="correct-answer" id="correct5">Правильный ответ: б) Оперативное Запоминающее Устройство</div>
+        </div>
+
+        <!-- Вопрос 6 -->
+        <div class="question-block" id="q6">
+            <div class="question-number">6</div>
+            <div class="question-text">Какой тип алгоритмической конструкции используется для многократного выполнения одной и той же последовательности действий?</div>
+<div class="variants-grid">
+                <div class="variant" onclick="selectVariant(this, 'a6')">а) Следование</div>
+                <div class="variant" onclick="selectVariant(this, 'a6')">б) Ветвление</div>
+                <div class="variant" onclick="selectVariant(this, 'a6')">в) Цикл</div>
+                <div class="variant" onclick="selectVariant(this, 'a6')">г) Рекурсия</div>
+            </div>
+            <input id="a6" type="text" class="answer-input" placeholder="Введите букву ответа (а, б, в, г)" maxlength="1" />
+            <div class="correct-answer" id="correct6">Правильный ответ: в) Цикл</div>
+        </div>
+
+        <!-- Вопрос 7 -->
+        <div class="question-block" id="q7">
+            <div class="question-number">7</div>
+            <div class="question-text">Что из перечисленного НЕ является реляционной базой данных?</div>
+            <div class="variants-grid">
+                <div class="variant" onclick="selectVariant(this, 'a7')">а) MySQL</div>
+                <div class="variant" onclick="selectVariant(this, 'a7')">б) PostgreSQL</div>
+                <div class="variant" onclick="selectVariant(this, 'a7')">в) MongoDB</div>
+                <div class="variant" onclick="selectVariant(this, 'a7')">г) Oracle Database</div>
+            </div>
+            <input id="a7" type="text" class="answer-input" placeholder="Введите букву ответа (а, б, в, г)" maxlength="1" />
+            <div class="correct-answer" id="correct7">Правильный ответ: в) MongoDB</div>
+        </div>
+
+        <!-- Вопрос 8 -->
+        <div class="question-block" id="q8">
+            <div class="question-number">8</div>
+            <div class="question-text">Как называется процесс поиска и исправления ошибок в программном коде?</div>
+            <div class="variants-grid">
+                <div class="variant" onclick="selectVariant(this, 'a8')">а) Компиляция</div>
+                <div class="variant" onclick="selectVariant(this, 'a8')">б) Тестирование</div>
+                <div class="variant" onclick="selectVariant(this, 'a8')">в) Отладка (Дебаггинг)</div>
+                <div class="variant" onclick="selectVariant(this, 'a8')">г) Интерпретация</div>
+            </div>
+            <input id="a8" type="text" class="answer-input" placeholder="Введите букву ответа (а, б, в, г)" maxlength="1" />
+            <div class="correct-answer" id="correct8">Правильный ответ: в) Отладка (Дебаггинг)</div>
+        </div>
+
+        <!-- Вопрос 9 -->
+        <div class="question-block" id="q9">
+            <div class="question-number">9</div>
+            <div class="question-text">Какая логическая операция возвращает истину только тогда, когда оба ее операнда истинны?</div>
+            <div class="variants-grid">
+                <div class="variant" onclick="selectVariant(this, 'a9')">а) NOT (НЕ)</div>
+                <div class="variant" onclick="selectVariant(this, 'a9')">б) OR (ИЛИ)</div>
+                <div class="variant" onclick="selectVariant(this, 'a9')">в) XOR (исключающее ИЛИ)</div>
+                <div class="variant" onclick="selectVariant(this, 'a9')">г) AND (И)</div>
+            </div>
+            <input id="a9" type="text" class="answer-input" placeholder="Введите букву ответа (а, б, в, г)" maxlength="1" />
+            <div class="correct-answer" id="correct9">Правильный ответ: г) AND (И)</div>
+        </div>
+
+        <!-- Вопрос 10 -->
+        <div class="question-block" id="q10">
+            <div class="question-number">10</div>
+            <div class="question-text">Что такое «HTML»?</div>
+            <div class="variants-grid">
+                <div class="variant" onclick="selectVariant(this, 'a10')">а) Язык программирования для создания веб-приложений</div>
+                <div class="variant" onclick="selectVariant(this, 'a10')">б) Протокол передачи гипертекста</div>
+<div class="variant" onclick="selectVariant(this, 'a10')">в) Язык разметки гипертекста</div>
+                <div class="variant" onclick="selectVariant(this, 'a10')">г) Система управления базами данных</div>
+            </div>
+            <input id="a10" type="text" class="answer-input" placeholder="Введите букву ответа (а, б, в, г)" maxlength="1" />
+            <div class="correct-answer" id="correct10">Правильный ответ: в) Язык разметки гипертекста</div>
+        </div>
+
+        <div class="controls">
+            <button class="check-btn" onclick="Check()">✅ Проверить ответы</button>
+        </div>
+
+        <div class="result" id="result" style="display: none;">
+            <div class="result-score" id="score">0</div>
+            <div class="result-text" id="resultText">из 10 правильных ответов</div>
+        </div>
+
+        <div class="credits">
+            <p>Разработчики: Роман Трембач</p>
+        </div>
+    </div>
+
+    <script>
+        function selectVariant(element, inputId) {
+            // Убираем выделение у всех вариантов в этом вопросе
+            const variants = element.parentElement.querySelectorAll('.variant');
+            variants.forEach(v => v.classList.remove('selected'));
+            
+            // Выделяем выбранный вариант
+            element.classList.add('selected');
+            
+            // Получаем букву ответа (первый символ текста)
+            const answerLetter = element.textContent.trim().charAt(0);
+            
+            // Вставляем букву в поле ввода
+            document.getElementById(inputId).value = answerLetter;
+        }
+
+        function Check() {
+            let score = 0;
+            const answers = {
+                'a1': 'в', 'a2': 'б', 'a3': 'г', 
+                'a4': 'в', 'a5': 'б', 'a6': 'в', 
+                'a7': 'в', 'a8': 'в', 'a9': 'г', 
+                'a10': 'в'
+            };
+
+            // Скрываем все подсказки с правильными ответами
+            for (let i = 1; i <= 10; i++) {
+                document.getElementById('correct' + i).style.display = 'none';
+            }
+
+            for (let i = 1; i <= 10; i++) {
+                let question = document.getElementById('q' + i);
+                let answerInput = document.getElementById('a' + i);
+                let userAnswer = answerInput.value.trim().toLowerCase();
+                let correctAnswer = answers['a' + i];
+                
+                // Убираем предыдущие классы
+                question.classList.remove('correct', 'incorrect');
+                
+                if (userAnswer === correctAnswer) {
+                    question.classList.add('correct');
+                    score++;
+                } else {
+                    question.classList.add('incorrect');
+                    // Показываем правильный ответ для неправильных
+                    document.getElementById('correct' + i).style.display = 'block';
+                }
+            }
+            
+            // Показываем результат
+            const result = document.getElementById('result');
+            const scoreElement = document.getElementById('score');
+            const resultText = document.getElementById('resultText');
+            
+            scoreElement.textContent = score;
+            result.style.display = 'block';
+            
+            // Добавляем разный текст в зависимости от результата
+            if (score === 10) {
+                resultText.textContent = 'Отличный результат! Вы настоящий эксперт в информатике! 🎉';
+            } else if (score >= 7) {
+                resultText.textContent = 'Хороший результат! Вы хорошо разбираетесь в информатике! 👍';
+            } else if (score >= 5) {
+                resultText.textContent = 'Неплохой результат! Есть куда стремиться! 💪';
+            } else {
+                resultText.textContent = 'Попробуйте еще раз! Информатика - это интересно! 📚';
+            }
+            
+            // Плавная прокрутка к результату
+            result.scrollIntoView({ behavior: 'smooth' });
+        }
+// Добавляем обработчики для полей ввода
+        document.querySelectorAll('.answer-input').forEach(input => {
+            input.addEventListener('input', function(e) {
+                // Ограничиваем ввод только буквами а-г
+                this.value = this.value.replace(/[^абвг]/gi, '').toLowerCase();
+                
+                // Снимаем выделение с вариантов при ручном вводе
+                const variants = this.parentElement.querySelectorAll('.variant');
+                variants.forEach(v => v.classList.remove('selected'));
+            });
+        });
+    </script>
+</body>
+</html>

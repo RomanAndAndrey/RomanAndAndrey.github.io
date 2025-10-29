@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Коллекция упражнений Vue</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #222;
+        }
+
+        main {
+            max-width: 960px;
+            margin: 0 auto;
+            display: grid;
+            gap: 24px;
+        }
+
+        section {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        h1, h2 {
+            margin-top: 0;
+        }
+
+        button {
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: none;
+            background-color: #007bff;
+            color: #ffffff;
+            font-size: 1rem;
+            transition: background-color 0.2s ease;
+            margin-right: 8px;
+        }
+
+        button:last-child {
+            margin-right: 0;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #cccccc;
+            margin-right: 8px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        .active-panel {
+            background-color: #e6ffed;
+            border: 1px solid #2ecc71;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <section>
+            <h1>Задание 1: Приветствие</h1>
+            <div id="app">
+                <h2>{{ message }}</h2>
+                <p>Привет, {{ name }}!</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Задание 2: Счётчик</h2>
+            <div id="counter-app">
+                <p>Текущее значение: <strong>{{ count }}</strong></p>
+                <button @click="increment">Увеличить</button>
+                <button @click="reset">Сбросить</button>
+            </div>
+        </section>
+
+        <section>
+            <h2>Задание 3: Список дел</h2>
+            <div id="todo-app">
+                <div>
+                    <input
+                        type="text"
+                        v-model="newTodo"
+                        placeholder="Новая задача"
+                    >
+                    <button @click="addTodo">Добавить</button>
+                </div>
+                <ul>
+                    <li v-for="(todo, index) in todos" :key="todo + index">
+                        {{ todo }}
+                        <button @click="removeTodo(index)">Удалить</button>
+                    </li>
+                </ul>
+                <p v-if="!todos.length">Список задач пока пуст.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Задание 4: Переключатель</h2>
+            <div id="toggle-app">
+                <button @click="toggle">Показать/Скрыть</button>
+                <p v-if="isVisible">Этот текст отображается с помощью <strong>v-if</strong>.</p>
+                <p v-show="isVisible">Этот текст отображается с помощью <strong>v-show</strong>.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Задание 5: Простой калькулятор</h2>
+            <div id="calculator-app">
+                <div>
+                    <input type="number" v-model.number="num1" placeholder="Число 1">
+                    <input type="number" v-model.number="num2" placeholder="Число 2">
+                </div>
+                <div style="margin-top: 12px;">
+                    <button @click="calculate('+')">+</button>
+                    <button @click="calculate('-')">-</button>
+                    <button @click="calculate('*')">*</button>
+                    <button @click="calculate('/')">/</button>
+                </div>
+                <p style="margin-top: 16px;">Результат: <strong>{{ result }}</strong></p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Задание 6: Динамические классы и стили</h2>
+            <div id="styles-app">
+                <button @click="toggleActive">
+                    {{ isActive ? "Отключить активное состояние" : "Включить активное состояние" }}
+                </button>
+                <input
+                    type="text"
+                    v-model="textColor"
+                    placeholder="Например, red или #00ff00"
+                    style="margin-left: 8px;"
+                >
+                <div
+                    :class="{ 'active-panel': isActive }"
+                    :style="{ color: textColor || '#222' }"
+                    style="margin-top: 16px; padding: 16px; border-radius: 8px; border: 1px solid #dddddd;"
+                >
+                    Управляй стилями с помощью Vue!
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    message: "Привет, Vue!",
+                    name: "ChatGPT"
+                };
+            }
+        }).mount("#app");
+
+        createApp({
+            data() {
+                return {
+                    count: 0
+                };
+            },
+            methods: {
+                increment() {
+                    this.count += 1;
+                },
+                reset() {
+                    this.count = 0;
+                }
+            }
+        }).mount("#counter-app");
+
+        createApp({
+            data() {
+                return {
+                    newTodo: "",
+                    todos: ["Выучить Vue", "Сделать проект"]
+                };
+            },
+            methods: {
+                addTodo() {
+                    const trimmed = this.newTodo.trim();
+                    if (trimmed) {
+                        this.todos.push(trimmed);
+                        this.newTodo = "";
+                    }
+                },
+                removeTodo(index) {
+                    this.todos.splice(index, 1);
+                }
+            }
+        }).mount("#todo-app");
+
+        createApp({
+            data() {
+                return {
+                    isVisible: false
+                };
+            },
+            methods: {
+                toggle() {
+                    this.isVisible = !this.isVisible;
+                }
+            }
+        }).mount("#toggle-app");
+
+        createApp({
+            data() {
+                return {
+                    num1: 0,
+                    num2: 0,
+                    result: 0
+                };
+            },
+            methods: {
+                calculate(operation) {
+                    const a = Number(this.num1);
+                    const b = Number(this.num2);
+                    switch (operation) {
+                        case '+':
+                            this.result = a + b;
+                            break;
+                        case '-':
+                            this.result = a - b;
+                            break;
+                        case '*':
+                            this.result = a * b;
+                            break;
+                        case '/':
+                            this.result = b === 0 ? 'Деление на ноль' : a / b;
+                            break;
+                        default:
+                            this.result = 0;
+                    }
+                }
+            }
+        }).mount("#calculator-app");
+
+        createApp({
+            data() {
+                return {
+                    isActive: false,
+                    textColor: ""
+                };
+            },
+            methods: {
+                toggleActive() {
+                    this.isActive = !this.isActive;
+                }
+            }
+        }).mount("#styles-app");
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/raphael@2.3.0/raphael.min.js">
+    </script>
+
+</head>
+<body>
+    <div id="canvas"></div>
+    <script>
+        var paper = Raphael("canvas", 400, 400); // предполагается, что есть <div id="canvas"></div>
+
+        // Голова
+        var head = paper.circle(200, 200, 100);
+        head.attr({fill: "#ffeb3b", stroke: "#000", "stroke-width": 2});
+
+        // Глаза
+        var eye1 = paper.circle(160, 160, 15);
+        var eye2 = paper.circle(240, 160, 15);
+        eye1.attr({fill: "#000"});
+        eye2.attr({fill: "#000"});
+
+        // Улыбка (используем путь)
+        var smile = paper.path("M150,240 Q200,280 250,240");
+        smile.attr({stroke: "#000", "stroke-width": 3});
+
+        let smileFlag=true;
+        head.node.onclick=()=>{
+            
+        smileFlag=!smileFlag;
+        console.log(smileFlag);
+        if (smileFlag) {
+            smile.attr({path: "M150,240 Q200,100 250,240"});
+        }
+        else
+        {
+            smile.attr({path: "M150,240 Q200,280 250,240"})
+        }
+        }
+    </script>
+</body>
+</html>

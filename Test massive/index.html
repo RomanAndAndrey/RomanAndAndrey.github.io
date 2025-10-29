@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бадалин Андрей. ИС 3.1</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+
+<body>
+    <h1>Тест по информатике</h1>
+    <table border="1" id="q1">
+        <tr>
+            <td rowspan="3">1</td>
+            <td colspan="4" class="task">
+                Автоматическое устройство осуществило перекодировку информационного сообщения на русском языке,
+                первоначально записанного в 16-битном коде Unicode, в 8-битную кодировку КОИ-8. При этом информационное
+                сообщение уменьшилось на 480 бит. Какова длина сообщения в символах?
+            </td>
+        </tr>
+        <tr>
+            <td class="variant">1) 30</td>
+            <td class="variant">2) 60</td>
+            <td class="variant">3) 120</td>
+            <td class="variant">4) 480</td>
+        </tr>
+        <tr>
+            <td colspan="5">
+                <input id="a1" type="text" class="answer" placeholder="Ответ" />
+            </td>
+        </tr>
+    </table>
+
+
+    <table border="1" id="q2">
+        <tr>
+            <td rowspan="3">1</td>
+            <td colspan="4" class="task">
+                1.  Информационное сообщение объемом 450 бит состоит из 150 символов. Каков информационный вес каждого символа этого сообщения?
+            </td>
+        </tr>
+        <tr>
+            <td class="variant">1) 5 бит</td>
+            <td class="variant">2) 30 бит</td>
+            <td class="variant">3) 3 бита</td>
+            <td class="variant">4) 3 байта</td>
+        </tr>
+        <tr>
+            <td colspan="5">
+                <input id="a2" type="text" class="answer" placeholder="Ответ" />
+            </td>
+        </tr>
+    </table>
+
+
+    <table border="1" id="q3">
+        <tr>
+            <td rowspan="3">1</td>
+            <td colspan="4" class="task">
+                2.  Информационное сообщение объемом 3 Кбайта содержит 6144 символа. Сколько сим-волов содержит алфавит, при помощи которого было записано это сообщение?
+            </td>
+        </tr>
+        <tr>
+            <td class="variant">1) 4</td>
+            <td class="variant">2) 16</td>
+            <td class="variant">3) 8</td>
+            <td class="variant">4) 32</td>
+        </tr>
+        <tr>
+            <td colspan="5">
+                <input id="a3" type="text" class="answer" placeholder="Ответ" />
+            </td>
+        </tr>
+    </table>
+
+
+
+
+   
+
+
+    <button onclick="Check()">Проверить</button>
+    <div>Правильно:<span id="score"></span></div>
+    <p>Разработчики:
+        Бадалин Андрей
+    </p>
+
+
+    <script>
+
+
+        function Check() {
+            let score=0;
+            let q1 = document.getElementById('q1');
+            let a1 = document.getElementById('a1');
+            if (a1.value == '1') {
+                q1.style.border = '1px solid green ';
+                score++;
+            }
+            else {
+                q1.style.border = '1px solid red';
+            }
+
+
+            let q2 = document.getElementById('q2');
+            let a2 = document.getElementById('a2');
+            if (a2.value == '2') {
+                q2.style.border = '1px solid green ';
+                score++;
+            }
+            else {
+                q2.style.border = '1px solid red';
+            }
+
+
+            let q3 = document.getElementById('q3');
+            let a3 = document.getElementById('a3');
+            if (a3.value == '3') {
+                q3.style.border = '1px solid green ';
+                score++;
+            }
+            else {
+                q3.style.border = '1px solid red';
+            }
+            document.getElementById('score').innerHTML=score;
+
+
+        }
+    </script>
+</body>
+
+
+</html>

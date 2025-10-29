@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бадалин А.Д.</title>
+    <script src="https://cdn.jsdelivr.net/npm/raphael@2.3.0/raphael.min.js">
+    </script>
+</head>
+<body>
+    <div id="canvas"></div>
+    <script>
+var paper = Raphael("canvas", 600, 400);
+var width = 600, height = 400;
+
+// Функция для масштабирования математической координаты X в пиксельную
+function scaleX(x) { return width / 2 + x * 30; }
+// Функция для масштабирования математической координаты Y в пиксельную (ось Y инвертирована)
+function scaleY(y) { return height / 2 - y * 30; }
+
+// Рисуем оси
+paper.path("M" + scaleX(-10) + "," + scaleY(0) + "L" + scaleX(10) + "," + scaleY(0)) // Ось X
+      .attr({stroke: "#000"});
+paper.path("M" + scaleX(0) + "," + scaleY(-10) + "L" + scaleX(0) + "," + scaleY(10)) // Ось Y
+      .attr({stroke: "#000"});
+
+// Генерируем путь для графика y = x^2
+var pathString = "";
+for (var x = -5; x <= 5; x += 0.1) {
+    var y = Math.sin(x);
+    var px = scaleX(x);
+    var py = scaleY(y);
+    if (x === -5) {
+        pathString += "M " + px + "," + py;
+    } else {
+        pathString += " L " + px + "," + py;
+    }
+}
+console.log(pathString);
+
+// Рисуем график
+var graph = paper.path(pathString);
+graph.attr({stroke: "#e91e63", "stroke-width": 2});
+    </script>
+</body>
+</html>

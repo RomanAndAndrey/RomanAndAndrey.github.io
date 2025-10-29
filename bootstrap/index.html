@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Иванов Иван. ИС 3.1</title>
+    <link rel="stylesheet" href="style.css">
+    <!--Подключаем Bootstrap через CDN. Важно разместить его после своих стилей-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+
+</head>
+
+
+
+
+<body>
+    <div class="container"><!--Обязательно создаем div с классом container-->
+        <div class="row">
+            <div class="col d-flex justify-content-center">
+                <h1>Тест по информатике</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col bg-white">
+                <table border="1" id="q1">
+                    <tr>
+                        <td rowspan="3">1</td>
+                        <td colspan="4" class="task">
+                            Автоматическое устройство осуществило перекодировку информационного сообщения на русском
+                            языке,
+                            первоначально записанного в 16-битном коде Unicode, в 8-битную кодировку КОИ-8. При этом
+                            информационное
+                            сообщение уменьшилось на 480 бит. Какова длина сообщения в символах?
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="variant">1) 30</td>
+                        <td class="variant">2) 60</td>
+                        <td class="variant">3) 120</td>
+                        <td class="variant">4) 480</td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">
+                            <input class="form-control" style="width: 200px;" id="a1" type="text" class="answer" placeholder="Ответ" />
+                        </td>
+                    </tr>
+                </table>
+
+
+
+
+                <table border="1" id="q2">
+                    <tr>
+                        <td rowspan="3">2</td>
+                        <td colspan="4" class="task">
+                            1. Информационное сообщение объемом 450 бит состоит из 150 символов. Каков информационный
+                            вес
+                            каждого
+                            символа этого сообщения?
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="variant">1) 5 бит</td>
+                        <td class="variant">2) 30 бит</td>
+                        <td class="variant">3) 3 бита</td>
+                        <td class="variant">4) 3 байта</td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">
+                            <input  class="form-control" style="width: 200px;"  id="a2" type="text" class="answer" placeholder="Ответ" />
+                        </td>
+                    </tr>
+                </table>
+
+
+
+
+                <table border="1" id="q3">
+                    <tr>
+                        <td rowspan="3">3</td>
+                        <td colspan="4" class="task">
+                            2. Информационное сообщение объемом 3 Кбайта содержит 6144 символа. Сколько символов
+                            содержит
+                            алфавит,
+                            при помощи которого было записано это сообщение?
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="variant">1) 4</td>
+                        <td class="variant">2) 16</td>
+                        <td class="variant">3) 8</td>
+                        <td class="variant">4) 32</td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">
+                            <input  class="form-control" style="width: 200px;"  id="a3" type="text" class="answer" placeholder="Ответ" />
+                        </td>
+                    </tr>
+                </table>
+            </div><!--col-->
+        </div><!--row-->
+        <div class="row">
+            <div class="col">
+                <button  class="btn btn-dark" onclick="Check()">Проверить</button>
+                <div>Правильно:<span id="score"></span></div>
+                <p>Разработчики:
+                    Иванов Иван, Петров Андрей
+                </p>
+                <!------------ Сохранение и загрузка ---------------------->
+                <button class="btn btn-dark" onclick="Save()">Сохранить результаты</button>
+                <button class="btn btn-dark" onclick="Load()">Загрузить результаты</button>
+                <!------------ Сохранение и загрузка ---------------------->
+            </div>
+        </div>
+    </div><!--container-->
+
+
+    <script>
+        //Делаем answers глобальной переменной, чтобы иметь доступ к массиву из других функций        
+        let answers = ['1', '2', '3'];//массив с ответами
+        //Имя для локального хранилища
+        let itemLSName = 'localStorageIvanovIvan'
+        //Проверка ответов
+        function Check() {
+
+
+            let score = 0;
+            //создаем цикл от 1 до длины массива answers. Переменная i-будет счетчиком цикла(1,2,3)
+            for (let i = 1; i <= answers.length; i++) {
+                //получаем ссылку на объект table с вопросом
+                let q = document.getElementById('q' + i);
+                //получаем ссылку на объект input с ответом пользователя
+                let a = document.getElementById('a' + i);
+                //если ответ совпадает с правильным ответом
+                if (a.value == answers[i - 1]) {
+                    //окрашиваем табличку с вопросом в зеленый цвет
+                    q.style.border = '1px solid green ';
+                    //увеличиваем количество правильных ответов
+                    score++;
+                }
+                else {
+                    //если ответ не совпадает, то окрашиваем табличку в красный цвет
+                    q.style.border = '1px solid red';
+                }
+            }
+
+
+            //находим элемент с id score и меняем его внутреннее содержимое на score
+            document.getElementById('score').innerHTML = score;
+        }
+        // Сохранение и загрузка
+
+
+
+
+        function Save() {
+            if (typeof (Storage) !== "undefined") {
+                console.log("Local Storage доступен.");
+            } else {
+
+
+                alert("Local Storage не поддерживается.")
+                return;
+            }
+
+
+            //Создаем  объект в котором соберем ответы пользователя и сохраним время сохранения
+            let object = {
+                userAnswers: [],
+                savedTime: null
+            };
+            //собирает текущие ответы
+            for (let i = 0; i < answers.length; i++)
+                //получаем ссылку на объект input с ответом пользователя
+                object.userAnswers[i] = document.getElementById('a' + (i + 1)).value;
+
+
+            //в свойство объекта savedTime сохраняем текущее время
+            object.savedTime = new Date();
+            console.log(object)
+            //сохраняем объект в ввиде JSON строки в локальном хранилище браузера
+            localStorage.setItem(itemLSName, JSON.stringify(object));
+            alert('Данные сохранены')
+        }
+
+
+
+
+        function Load() {
+            if (typeof (Storage) !== "undefined") {
+                console.log("Local Storage доступен.");
+            } else {
+
+
+                alert("Local Storage не поддерживается.")
+                return;
+            }
+
+
+            //получение JSON данных из хранилища браузера
+            const temp = localStorage.getItem(itemLSName);
+            console.log(temp);
+            //если в переменной temp null, это означает что в хранилище нет данных с таким ключом
+            if (temp != null) {
+                //включаем обработку исключительной ситуации
+                let object;
+                try {
+                    //преобразование JSON данных в объект
+                    object = JSON.parse(temp);
+                    //вывод данных в консоль (для проверки работоспособности программы)
+                    console.log(object);
+                }
+                catch {
+                    console.error('Ошибка парсирования JSON');
+                    return;
+                }
+                //заполнение полей веб-старницы данными из массива
+                for (let i = 0; i < object.userAnswers.length; i++) {
+                    document.getElementById('a' + (i + 1)).value = object.userAnswers[i];
+                }
+            }
+            else alert('Нет сохранений с таким именем')
+        }
+    </script>
+
+
+    <!--Подключаем Bootstrap через CDN-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+
+</html>

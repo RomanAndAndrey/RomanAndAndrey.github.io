@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Угадай число</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+
+<body>
+
+
+
+
+  <h1>Компьютер загадал число от 1 до 100</h1>
+  <input type="number" id="userInput" placeholder="Введите ваше число" min="1" max="100">
+  <button id="submitBtn" onclick="Guess()">Угадать</button>
+  <button id="newGameBtn" onclick="NewGame()">Новая игра</button>
+
+
+
+ <p>Разработчики:
+        Бадалин Андрей
+    </p>
+  <div id="output"></div>
+  <div id="Image"></div>
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+</body>
+
+
+</html>

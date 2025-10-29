@@ -1,0 +1,212 @@
+:root {
+    --bg: #0f1221;
+    --panel: #151938;
+    --panel-2: #10142b;
+    --text: #e9ecf1;
+    --muted: #aab2c5;
+    --accent: #6aa2ff;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    background: radial-gradient(1600px 800px at -10% 0%, #1a2250 0%, transparent 60%),
+        radial-gradient(1600px 800px at 110% -10%, #1a2250 0%, transparent 60%), var(--bg);
+    color: var(--text);
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 24px 28px;
+}
+
+.icon { width: 40px; height: 40px; }
+
+.muted { color: var(--muted); }
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px 40px;
+}
+
+.panel {
+    background: linear-gradient(180deg, var(--panel) 0%, var(--panel-2) 100%);
+    border: 1px solid #27305a;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.row { display: flex; align-items: center; gap: 8px; }
+.badge { background: #0d1130; border: 1px solid #2a3360; padding: 4px 8px; border-radius: 8px; }
+
+.form { display: grid; gap: 10px; margin-top: 12px; }
+label { display: grid; gap: 6px; }
+input, textarea {
+    background: #0d1130;
+    color: var(--text);
+    border: 1px solid #2a3360;
+    border-radius: 10px;
+    padding: 10px 12px;
+}
+textarea { min-height: 90px; resize: vertical; }
+
+.primary { background: var(--accent); color: #07122b; border: 0; padding: 10px 14px; border-radius: 10px; cursor: pointer; font-weight: 700; }
+
+.list { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 8px; }
+.list li { background: #0b1030; border: 1px solid #27305a; border-radius: 10px; padding: 10px 12px; }
+.meta { color: var(--muted); font-size: 12px; }
+
+/* GitHub repos */
+.repo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.repo-card {
+    background: #0b1030;
+    border: 1px solid #27305a;
+    border-radius: 10px;
+    padding: 12px;
+    display: grid;
+    gap: 8px;
+}
+
+.repo-card h3 {
+    margin: 0;
+    font-size: 15px;
+}
+
+.repo-desc {
+    color: var(--muted);
+    font-size: 13px;
+    min-height: 34px;
+}
+
+.repo-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.repo-links {
+    display: flex;
+    gap: 8px;
+}
+
+.btn {
+    background: #0d1130;
+    color: var(--text);
+    border: 1px solid #2a3360;
+    border-radius: 8px;
+    padding: 6px 10px;
+    text-decoration: none;
+}
+
+/* Viewer modal */
+/* Скрыто по умолчанию; показывается когда атрибут hidden снят */
+.viewer-modal { display: none; }
+.viewer-modal:not([hidden]) {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 1000;
+}
+/* На случай коллизий — принудительно скрыть, если hidden задан */
+.viewer-modal[hidden] { display: none !important; }
+
+.viewer-content {
+    background: #0b1030;
+    border: 1px solid #27305a;
+    border-radius: 12px;
+    width: min(1200px, 96vw);
+    height: min(800px, 90vh);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    overflow: hidden;
+}
+
+.viewer-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: linear-gradient(180deg, var(--panel) 0%, var(--panel-2) 100%);
+    border-bottom: 1px solid #27305a;
+}
+
+.viewer-bar .spacer { flex: 1; }
+
+#viewer-frame {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: #0b1030;
+}
+.header .admin-controls {
+    margin-left: auto;
+}
+
+.btn:hover { opacity: 0.9; }
+
+.btn-sm {
+    padding: 4px 8px;
+    font-size: 12px;
+}
+
+.btn-danger {
+    background: #d94c5a;
+    border-color: #d94c5a;
+    color: #fff;
+}
+
+.btn-secondary {
+    background: #1c2344;
+    border-color: #1c2344;
+    color: var(--text);
+}
+
+.repo-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.repo-owner {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.msg-actions {
+    margin-top: 8px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.message-text {
+    white-space: pre-wrap;
+}
+
+.error-box {
+    margin-top: 8px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #7a1e2e;
+    background: #3a0e17;
+    color: #ffd2d2;
+}
