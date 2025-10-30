@@ -1,0 +1,34 @@
+{
+  "andrey": [
+    {
+      "name": "Paint — рисовалка на Canvas",
+      "path": "Paint/",
+      "description": "Приложение для рисования на HTML5 Canvas."
+    },
+    {
+      "name": "Примеры Bootstrap",
+      "path": "bootstrap/",
+      "description": "Демо‑страницы и компоненты Bootstrap."
+    }
+  ],
+  "roman": [
+    {
+      "name": "Примеры на Vue",
+      "path": "vue/",
+      "description": "Небольшие примеры и эксперименты на Vue.js."
+    }
+  ],
+  "joint": [
+    {
+      "name": "Игра: Угадай по картинке",
+      "path": "JS_guess_from_the_picture-main/guess_pictures.html",
+      "image": "JS_guess_from_the_picture-main/backgrounds/got01.jpg",
+      "description": "Игра на угадывание по картинке с несколькими режимами."
+    },
+    {
+      "name": "Test massive",
+      "path": "Test massive/",
+      "description": "Примеры и наработки с тестовыми данными."
+    }
+  ]
+}

@@ -76,66 +76,24 @@ function updateThemeIcon() {
   themeToggle.textContent = dark ? '☀️' : '🌙';
 }
 
-// Загрузка проектов из README.md
-async function loadProjectsFromReadme() {
+// Загрузка проектов из projects.json
+async function loadProjectsFromJson() {
   try {
-    const org = document.querySelector('meta[name="gh-org"]')?.content || location.hostname.split('.')[0];
-    const repo = document.querySelector('meta[name="gh-repo"]')?.content || `${org}.github.io`;
-    const url = `https://raw.githubusercontent.com/${org}/${repo}/main/README.md`;
-
-    const res = await fetch(url, { cache: 'no-cache' });
+    const res = await fetch('projects.json', { cache: 'no-cache' });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const md = await res.text();
+    const data = await res.json();
 
-    const projects = parseProjectsFromMarkdown(md);
-    renderProjects(projects.andrey, 'andrey-projects');
-    renderProjects(projects.roman, 'roman-projects');
-    renderProjects(projects.joint, 'joint-projects');
+    renderProjects(data.andrey || [], 'andrey-projects');
+    renderProjects(data.roman || [], 'roman-projects');
+    renderProjects(data.joint || [], 'joint-projects');
 
     const status = document.getElementById('load-status');
     if (status) status.textContent = '';
   } catch (e) {
     const status = document.getElementById('load-status');
-    if (status) status.textContent = 'Не удалось загрузить README.md';
-    console.error('README fetch error:', e);
+    if (status) status.textContent = 'Не удалось загрузить projects.json';
+    console.error('Projects fetch error:', e);
   }
-}
-
-// Парсер проектов
-// Поддерживает строки вида:
-// - [Название](путь) — описание
-// - БАД [Название](путь)
-// - ТРФ [Название](путь) - описание
-// Маркеры ТРФ/TRF → Роман, БАД/BAD → Андрей, без маркера → совместный
-function parseProjectsFromMarkdown(md) {
-  const lines = md.split(/\r?\n/);
-  const buckets = { andrey: [], roman: [], joint: [] };
-
-  for (const line of lines) {
-    const link = line.match(/\[([^\]]+)\]\(([^)]+)\)/);
-    if (!link) continue;
-
-    const name = link[1].trim();
-    const path = link[2].trim();
-    const rest = line.slice(line.indexOf(')') + 1);
-    const descMatch = rest.match(/[—\-–]\s*(.+)$/);
-    const description = descMatch ? descMatch[1].trim() : '';
-    const imgMatch = line.match(/!\[[^\]]*\]\(([^)]+)\)/);
-    const image = imgMatch ? imgMatch[1] : undefined;
-
-    const upper = line.toUpperCase();
-    const isRoman = upper.includes('ТРФ') || upper.includes('TRF');
-    const isAndrey = upper.includes('БАД') || upper.includes('BAD');
-
-    const item = { name, path, description };
-    if (image) item.image = image;
-
-    if (isRoman && !isAndrey) buckets.roman.push(item);
-    else if (isAndrey && !isRoman) buckets.andrey.push(item);
-    else buckets.joint.push(item);
-  }
-
-  return buckets;
 }
 
 // Инициализация
@@ -144,7 +102,7 @@ window.addEventListener('DOMContentLoaded', () => {
   setTheme(savedTheme === 'dark');
   document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
 
-  loadProjectsFromReadme();
+  loadProjectsFromJson();
 
   document.getElementById('modal-close').addEventListener('click', closeModal);
   document.getElementById('modal').addEventListener('click', (e) => {
