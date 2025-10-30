@@ -1,18 +1,26 @@
 ﻿// Конфигурация проектов — редактируйте только этот блок
 // Каждый проект: { name, description, path, image }
 const andreyProjects = [
-  // Пример:
-  // { name: 'БАД Paint — рисовалка на Canvas', description: 'Рисование на HTML5 Canvas', path: 'Paint/', image: 'Paint/icon.png' }
+  { name: 'bootstrap', description: 'Практика использования bootstrap', path: 'bootstrap/', image: 'bootstrap/bootstrap.png' },
+  { name: 'Test massive', description: 'Использование massive для создания теста', path: 'Test massive/', image: 'Test massive/testmassive.png' },
+  { name: 'Анекдоты', description: 'Тестирование возможностей ИИ', path: 'Анекдоты/', image: 'Анекдоты/sticker.webp' },
+  { name: 'Проект от ИИ', description: 'Курсы валют ЦБ РФ', path: 'Проект от ИИ/', image: 'Проект от ИИ/icon.svg' },
+  { name: 'Рисовалка', description: 'Рисуем с помощью canvas', path: 'bootstrap/', image: 'Рисовалка/canvas.png' },
+  { name: 'Рисуем', description: 'Знакомство с canvas на паре', path: 'Рисуем/', image: 'Рисуем/рисуем.png' },
+  { name: 'Угадай число', description: 'Выполненное задание недели 5', path: 'Угадай число', image: 'Угадай число/Угадайчисло.webp' }
 ];
 
 const romanProjects = [
-  // Пример:
-  // { name: 'ТРФ Vue демо', description: 'Небольшие примеры на Vue.js', path: 'vue/' }
+  { name: 'Викторина по информатике', description: 'Работа на паре', path: 'Викторина по информатике/', image: 'Викторина по информатике/викторина.png' },
+  { name: 'Тест', description: 'Создание теста с использованием массива', path: 'Тест/', image: 'Тест/тест.avif' },
+  { name: 'Таблица и песня', description: 'Работа на паре', path: 'Таблица и песня/' },
+  { name: 'Таблица глаголов исключений', description: 'Работа на паре, табличная верстка', path: 'Таблица глаголов исключений/' }
 ];
 
 const jointProjects = [
-  // Пример:
-  // { name: 'Игра: Угадай по картинке', description: 'Несколько режимов', path: 'JS_guess_from_the_picture-main/guess_pictures.html', image: 'JS_guess_from_the_picture-main/backgrounds/got01.jpg' }
+  { name: 'bootstrap', description: 'Практика использования bootstrap', path: 'bootstrap/', image: 'bootstrap/bootstrap.png' },
+  { name: 'vue', description: 'Работа с vue на паре', path: 'vue/', image: 'vue/vue.png' },
+  { name: 'Сайт в интернете', description: 'Личный сайт', path: 'Сайт в интернете/', image: 'Сайт в интернете/сайт.jpg' },
 ];
 
 // Рендер карточек в контейнер
