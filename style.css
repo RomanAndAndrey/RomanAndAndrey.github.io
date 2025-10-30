@@ -245,3 +245,5 @@ body.dark {
     margin: 8px 0 16px;
     padding-left: 4px;
 }
+
+.section-title { font-size: 1.6rem; font-weight: 700; color: var(--accent); margin: 8px 0 16px; padding-left: 4px; }
