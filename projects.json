@@ -1,34 +1,62 @@
-{
-  "andrey": [
+﻿[
     {
-      "name": "Paint — рисовалка на Canvas",
-      "path": "Paint/",
-      "description": "Приложение для рисования на HTML5 Canvas."
+        "name":  "bootstrap БАД",
+        "path":  "bootstrap БАД/"
     },
     {
-      "name": "Примеры Bootstrap",
-      "path": "bootstrap/",
-      "description": "Демо‑страницы и компоненты Bootstrap."
-    }
-  ],
-  "roman": [
-    {
-      "name": "Примеры на Vue",
-      "path": "vue/",
-      "description": "Небольшие примеры и эксперименты на Vue.js."
-    }
-  ],
-  "joint": [
-    {
-      "name": "Игра: Угадай по картинке",
-      "path": "JS_guess_from_the_picture-main/guess_pictures.html",
-      "image": "JS_guess_from_the_picture-main/backgrounds/got01.jpg",
-      "description": "Игра на угадывание по картинке с несколькими режимами."
+        "name":  "Paint БАД",
+        "path":  "Paint БАД/"
     },
     {
-      "name": "Test massive",
-      "path": "Test massive/",
-      "description": "Примеры и наработки с тестовыми данными."
+        "name":  "Test massive БАД",
+        "path":  "Test massive БАД/"
+    },
+    {
+        "name":  "vue БАД",
+        "path":  "vue БАД/"
+    },
+    {
+        "name":  "Анекдоты БАД",
+        "path":  "Анекдоты БАД/"
+    },
+    {
+        "name":  "Викторина по информатике ТРФ",
+        "path":  "Викторина по информатике ТРФ/"
+    },
+    {
+        "name":  "Проект от ИИ БАД",
+        "path":  "Проект от ИИ БАД/"
+    },
+    {
+        "name":  "Рисуем БАД",
+        "path":  "Рисуем БАД/"
+    },
+    {
+        "name":  "Сайт в интернете ЬАД",
+        "path":  "Сайт в интернете ЬАД/"
+    },
+    {
+        "name":  "Смайлик ТРФ",
+        "path":  "Смайлик ТРФ/"
+    },
+    {
+        "name":  "Создание теста ТРФ",
+        "path":  "Создание теста ТРФ/"
+    },
+    {
+        "name":  "Таблица и песня ТРФ",
+        "path":  "Таблица и песня ТРФ/"
+    },
+    {
+        "name":  "Таблица ТРФ",
+        "path":  "Таблица ТРФ/"
+    },
+    {
+        "name":  "Угадай персонажа",
+        "path":  "Угадай персонажа/"
+    },
+    {
+        "name":  "Угадай число БАД",
+        "path":  "Угадай число БАД/"
     }
-  ]
-}
+]

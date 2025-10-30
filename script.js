@@ -83,9 +83,25 @@ async function loadProjectsFromJson() {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
 
-    renderProjects(data.andrey || [], 'andrey-projects');
-    renderProjects(data.roman || [], 'roman-projects');
-    renderProjects(data.joint || [], 'joint-projects');
+    // Универсальный вход: поддерживаем
+    // 1) { andrey:[], roman:[], joint:[] }
+    // 2) { projects: [] }
+    // 3) [ ... ] — массив верхнего уровня
+    // Во всех случаях распределяем по меткам в названии: БАД/BAD → Андрей, ТРФ/TRF → Роман, иначе → Совместные
+    let items = [];
+    if (Array.isArray(data)) {
+      items = data;
+    } else if (Array.isArray(data?.projects)) {
+      items = data.projects;
+    } else {
+      items = [...(data.andrey || []), ...(data.roman || []), ...(data.joint || [])];
+    }
+
+    const buckets = splitByMarkers(items);
+
+    renderProjects(buckets.andrey, 'andrey-projects');
+    renderProjects(buckets.roman, 'roman-projects');
+    renderProjects(buckets.joint, 'joint-projects');
 
     const status = document.getElementById('load-status');
     if (status) status.textContent = '';
@@ -94,6 +110,35 @@ async function loadProjectsFromJson() {
     if (status) status.textContent = 'Не удалось загрузить projects.json';
     console.error('Projects fetch error:', e);
   }
+}
+
+// Классификация по меткам в названии и очистка названий
+function splitByMarkers(items) {
+  const buckets = { andrey: [], roman: [], joint: [] };
+  const ANDREY = /(\bБАД\b|\bBAD\b)/i;
+  const ROMAN = /(\bТРФ\b|\bTRF\b)/i;
+
+  items.forEach((raw) => {
+    const item = { ...raw };
+    const title = String(item.name || '');
+    const src = `${title} ${item.path || ''}`;
+    const isAndrey = ANDREY.test(src);
+    const isRoman = ROMAN.test(src);
+
+    // Чистим метки из названия
+    item.name = title
+      .replace(/[\[\]()]/g, ' ')
+      .replace(/\b(БАД|BAD|ТРФ|TRF)\b/gi, ' ')
+      .replace(/\s*[-–—:]\s*/g, ' ')
+      .replace(/\s{2,}/g, ' ')
+      .trim();
+
+    if (isAndrey && !isRoman) buckets.andrey.push(item);
+    else if (isRoman && !isAndrey) buckets.roman.push(item);
+    else buckets.joint.push(item);
+  });
+
+  return buckets;
 }
 
 // Инициализация
