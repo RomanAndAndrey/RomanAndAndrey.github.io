@@ -1,7 +1,6 @@
 ﻿// Конфигурация проектов — редактируйте только этот блок
 // Каждый проект: { name, description, path, image }
 const andreyProjects = [
-  { name: 'bootstrap', description: 'Практика использования bootstrap', path: 'bootstrap/', image: 'bootstrap/bootstrap.png' },
   { name: 'Test massive', description: 'Использование massive для создания теста', path: 'Test massive/', image: 'Test massive/testmassive.png' },
   { name: 'Анекдоты', description: 'Тестирование возможностей ИИ', path: 'Анекдоты/', image: 'Анекдоты/sticker.webp' },
   { name: 'Проект от ИИ', description: 'Курсы валют ЦБ РФ', path: 'Проект от ИИ/', image: 'Проект от ИИ/icon.svg' },
