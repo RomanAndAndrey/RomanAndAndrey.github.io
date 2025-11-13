@@ -66,6 +66,14 @@ button:hover {
     box-shadow: 0 4px 16px rgba(44, 62, 80, 0.18);
 }
 
+button:disabled,
+button:disabled:hover {
+    cursor: wait;
+    opacity: 0.7;
+    transform: none;
+    box-shadow: 0 2px 6px rgba(44, 62, 80, 0.12);
+}
+
 .joke {
     font-size: 1.3rem;
     color: #222;
@@ -81,6 +89,45 @@ button:hover {
 .joke.show {
     opacity: 1;
     animation: jokeAppear 1.2s cubic-bezier(.68,-0.55,.27,1.55);
+}
+
+.loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 12px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    color: #4a6491;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+}
+
+.loader.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.loader .spinner {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 3px solid rgba(74, 100, 145, 0.2);
+    border-top-color: #4a6491;
+    animation: spin 0.8s linear infinite;
+}
+
+.loader__text {
+    font-size: 0.95rem;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 @keyframes jokeAppear {
@@ -116,4 +163,13 @@ body.dark button:hover {
 body.dark .joke {
     color: #ffe066;
     text-shadow: 0 2px 8px #ffe06644;
+}
+
+body.dark .loader {
+    color: #ffe066;
+}
+
+body.dark .loader .spinner {
+    border-color: rgba(255, 224, 102, 0.2);
+    border-top-color: #ffe066;
 }

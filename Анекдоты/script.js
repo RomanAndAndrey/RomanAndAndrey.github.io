@@ -44,8 +44,12 @@ const intro = [
 
 let unusedJokes = [...jokes];
 
-document.getElementById('jokeBtn').onclick = function() {
-    const jokeDiv = document.getElementById('joke');
+const jokeBtn = document.getElementById('jokeBtn');
+const jokeDiv = document.getElementById('joke');
+const loader = document.getElementById('loader');
+const themeToggle = document.getElementById('themeToggle');
+
+jokeBtn.onclick = function() {
     jokeDiv.classList.remove('show');
 
     if (unusedJokes.length === 0) {
@@ -53,6 +57,10 @@ document.getElementById('jokeBtn').onclick = function() {
         jokeDiv.style.opacity = 1;
         return;
     }
+
+    jokeBtn.disabled = true;
+    loader.classList.add('show');
+    loader.setAttribute('aria-hidden', 'false');
 
     const introText = intro[Math.floor(Math.random() * intro.length)];
     jokeDiv.textContent = introText;
@@ -64,11 +72,14 @@ document.getElementById('jokeBtn').onclick = function() {
         jokeDiv.textContent = jokeText;
         jokeDiv.classList.add('show');
         unusedJokes.splice(idx, 1);
+
+        loader.classList.remove('show');
+        loader.setAttribute('aria-hidden', 'true');
+        jokeBtn.disabled = false;
     }, 1200);
 };
 
-// Вынесите обработчик переключения темы сюда!
-document.getElementById('themeToggle').onclick = function() {
+themeToggle.onclick = function() {
     document.body.classList.toggle('dark');
     this.textContent = document.body.classList.contains('dark') ? '☀️ Светлая тема' : '🌙 Тёмная тема';
 };
